@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<vector>
+#include<iostream>
 using namespace std;
 
 
@@ -174,17 +175,84 @@ void heap_sort(vector<int> &ivec)
 	}
 }
 
+
+//πÈ≤¢≈≈–Ú
+void merge(vector<int> &ivec, int left, int mid, int right)
+{
+	vector<int> tmpVec;
+	int i = left;
+	int j = mid + 1;
+
+	while (i <= mid && j <= right)
+	{
+		if (ivec[i] < ivec[j])
+		{
+			tmpVec.push_back(ivec[i]);
+			i++;
+		}
+		else
+		{
+			tmpVec.push_back(ivec[j]);
+			j++;
+		}
+	}
+
+	while (i <= mid)
+	{
+		tmpVec.push_back(ivec[i]);
+		i++;
+	}
+	while (j <= right)
+	{
+		tmpVec.push_back(ivec[j]);
+		j++;
+	}
+	ivec = tmpVec;
+	//int a = 0;
+}
+
+void printArr(vector<int>& a, int start, int end)
+{
+	cout << "[";
+	for (auto i = start; i < end; i++)
+	{
+		cout << a[i];
+		if(i!=end-1)
+			cout << ",";
+	}
+	cout << "]";
+	cout << endl;
+}
+
+void merge_sort(vector<int> &ivec, int left, int right)
+{
+	if (left < right)
+	{
+		int mid = (left+right) / 2;
+		merge_sort(ivec, left, mid);
+		merge_sort(ivec, mid+1, right);
+		printArr(ivec, left, right+1);
+		merge(ivec, left, mid, right);
+		printArr(ivec, left, right + 1);
+	}
+}
+
 int main()
 {
-	//vector<int> a = { 2,1,34,102,465,12,55,10,31 };
-	vector<int> a = { 20,1,34,102,465,12,55,10,31 };
-	vector<int> b = { 2,8,3,9,5,7,6 };
+	vector<int> a = { 2,1,34,102,465,12,55,10,31 };
+	//vector<int> a = { 20,1,34,102,465,12,55,10,31 };
+	//vector<int> b = { 2,8,3,9,5,7,6 };
 	//bubble_sort(a);
 	//select_sort2(a);
 	//insert_sort(a);
 	//quick_sort(a, 0, a.size() - 1);
 	//hanoi(3, 'A', 'B', 'C');
 	//sift(b, 0, b.size() - 1);
-	heap_sort(a);
+	//heap_sort(a);
+
+	//vector<int> aa = {1,4,7,9,25,3,6,8,19};
+	//merge(aa, 0, aa.size() / 2, aa.size() - 1);
+
+	merge_sort(a, 0, a.size() - 1);
 	return 0;
 }
